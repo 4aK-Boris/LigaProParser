@@ -1,6 +1,6 @@
-package pro.liga.data.tournament
+package pro.liga.data.tournament.ended
 
-data class Tournament(
+data class EndedTournament(
     val id: Int,
     val title: String,
     val type: String,

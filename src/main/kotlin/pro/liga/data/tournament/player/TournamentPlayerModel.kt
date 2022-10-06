@@ -1,7 +1,6 @@
 package com.example.data.tournament.player
 
 import com.example.data.player.PlayerModel
-import pro.liga.data.tournament.TournamentModel
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.insert

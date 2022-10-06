@@ -1,4 +1,4 @@
-package pro.liga.data.tournament
+package pro.liga.data.tournament.ended
 
 import com.example.URL_LIGA_PRO
 import com.example.data.game.Game
@@ -12,23 +12,24 @@ import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import org.jsoup.Jsoup
+import pro.liga.data.tournament.TournamentType
 
-class TournamentMapper {
-    fun map(tournament: Tournament): TournamentDTO? {
-        val type = TournamentType.getType(tournament.type)
-        val dateTime = getDateTime(date = tournament.date, time = tournament.time) ?: return null
-        val dayOfTheWeek = DayOfTheWeek.getDay(tournament.dayOfTheWeek)
-        val players = tournament.players.mapIndexed { index, player ->
-            getTournamentsPlayerDTO(player = player, index = index, tournamentId = tournament.id)
+class EndedTournamentMapper {
+    fun map(endedTournament: EndedTournament): EndedTournamentDTO? {
+        val type = TournamentType.getType(endedTournament.type)
+        val dateTime = getDateTime(date = endedTournament.date, time = endedTournament.time) ?: return null
+        val dayOfTheWeek = DayOfTheWeek.getDay(endedTournament.dayOfTheWeek)
+        val players = endedTournament.players.mapIndexed { index, player ->
+            getTournamentsPlayerDTO(player = player, index = index, tournamentId = endedTournament.id)
         }
-        val games = tournament.games.map {
-            getGameDTO(link = it.first, time = it.second, tournamentId = tournament.id, dateTime = dateTime)
+        val games = endedTournament.games.map {
+            getGameDTO(link = it.first, time = it.second, tournamentId = endedTournament.id, dateTime = dateTime)
         }
 
-        return TournamentDTO(
-            id = tournament.id,
+        return EndedTournamentDTO(
+            id = endedTournament.id,
             type = type,
-            title = tournament.title,
+            title = endedTournament.title,
             dateTime = dateTime,
             dayOfTheWeek = dayOfTheWeek,
             players = players,

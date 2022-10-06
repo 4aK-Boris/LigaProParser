@@ -1,4 +1,4 @@
-package pro.liga.data.tournament
+package pro.liga.data.tournament.ended
 
 import com.example.data.game.GameModel
 import com.example.data.tournament.player.TournamentPlayerModel
@@ -8,7 +8,7 @@ import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.javatime.datetime
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 
-object TournamentModel : Table("tournaments") {
+object EndedTournamentModel : Table("tournaments") {
     val id = integer("id")
     private val title = varchar("title", 50)
     private val type = varchar("type", 10)
@@ -17,7 +17,7 @@ object TournamentModel : Table("tournaments") {
 
     override val primaryKey = PrimaryKey(id, name = "pk_tournament")
 
-    suspend fun insert(tournamentDTO: TournamentDTO) {
+    suspend fun insert(tournamentDTO: EndedTournamentDTO) {
         newSuspendedTransaction(Dispatchers.IO) {
             insert {
                 it[id] = tournamentDTO.id
