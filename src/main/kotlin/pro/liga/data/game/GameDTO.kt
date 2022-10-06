@@ -1,6 +1,5 @@
-package com.example.data.game
+package pro.liga.data.game
 
-import com.example.data.set.SetDTO
 import java.time.LocalDateTime
 
 data class GameDTO(
@@ -11,5 +10,5 @@ data class GameDTO(
     val dateTime: LocalDateTime,
     val countSets: Int? = null,
     val countPoints: Int? = null,
-    val sets: List<SetDTO>? = null
+    //val sets: List<SetDTO>? = null
 )

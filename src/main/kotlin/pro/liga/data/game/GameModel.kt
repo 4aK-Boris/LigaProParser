@@ -1,16 +1,16 @@
 package com.example.data.game
 
-import com.example.data.player.PlayerModel
-import com.example.data.set.SetModel
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.javatime.datetime
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
+import pro.liga.data.game.GameDTO
+import pro.liga.data.player.PlayerModel
 
 object GameModel: Table("games") {
     val id = integer("id")
-    private val tournamentId = integer("tournament_id") references TournamentModel.id
+    private val tournamentId = integer("tournament_id") //references TournamentModel.id
     private val dateTime = datetime("date_time")
     private val type = bool("type")
     private val firstPlayer = integer("first_player") references PlayerModel.id
@@ -34,26 +34,27 @@ object GameModel: Table("games") {
                 it[id] = gameDTO.id
                 it[tournamentId] = gameDTO.tournamentId
                 it[dateTime] = gameDTO.dateTime
-                it[type] = gameDTO.type
-                it[firstPlayer] = gameDTO.players.first
-                it[secondPlayer] = gameDTO.players.second
-                it[winnerPlayer] = gameDTO.winningPlayer
-                it[losingPlayer] = gameDTO.losingPlayer
-                it[countSets] = gameDTO.countSets
-                it[countPoints] = gameDTO.countPoints
-                it[firstScore] = gameDTO.score.first
-                it[secondScore] = gameDTO.score.second
-                it[firstScorePoints] = gameDTO.scorePoints.first
-                it[secondScorePoints] = gameDTO.scorePoints.second
-                it[firstSubmission] = gameDTO.playerSubmission.first
-                it[secondSubmission] = gameDTO.playerSubmission.second
-                it[firstSubmissionOther] = gameDTO.playerSubmissionOther.first
-                it[secondSubmissionOther] = gameDTO.playerSubmissionOther.second
-            }
-            gameDTO.sets?.let { sets ->
-                sets.forEach { setDTO ->
-                    SetModel.insert(setDTO)
-                }
+//                it[type] = gameDTO.type
+//                it[firstPlayer] = gameDTO.players.first
+//                it[secondPlayer] = gameDTO.players.second
+//                it[winnerPlayer] = gameDTO.winningPlayer
+//                it[losingPlayer] = gameDTO.losingPlayer
+//                it[countSets] = gameDTO.countSets
+//                it[countPoints] = gameDTO.countPoints
+//                it[firstScore] = gameDTO.score.first
+//                it[secondScore] = gameDTO.score.second
+//                it[firstScorePoints] = gameDTO.scorePoints.first
+//                it[secondScorePoints] = gameDTO.scorePoints.second
+//                it[firstSubmission] = gameDTO.playerSubmission.first
+//                it[secondSubmission] = gameDTO.playerSubmission.second
+//                it[firstSubmissionOther] = gameDTO.playerSubmissionOther.first
+//                it[secondSubmissionOther] = gameDTO.playerSubmissionOther.second
+//            }
+//            gameDTO.sets?.let { sets ->
+//                sets.forEach { setDTO ->
+//                    SetModel.insert(setDTO)
+//                }
+//            }
             }
         }
     }

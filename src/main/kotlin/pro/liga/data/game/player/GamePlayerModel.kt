@@ -1,7 +1,6 @@
 package com.example.data.game.player
 
 import com.example.data.game.GameModel
-import com.example.data.player.PlayerModel
 import org.jetbrains.exposed.sql.ReferenceOption
 import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.and
@@ -9,6 +8,7 @@ import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 import org.jetbrains.exposed.sql.update
+import pro.liga.data.player.PlayerModel
 
 object GamePlayerModel : Table("game_players") {
     private val id = integer("id").autoIncrement()

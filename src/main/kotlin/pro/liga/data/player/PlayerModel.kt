@@ -1,15 +1,12 @@
 package pro.liga.data.player
 
+import kotlinx.coroutines.Deferred
+import org.jetbrains.exposed.sql.*
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import java.time.LocalDate
-import org.jetbrains.exposed.sql.Table
-import org.jetbrains.exposed.sql.deleteWhere
-import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.javatime.date
-import org.jetbrains.exposed.sql.select
-import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 import org.jetbrains.exposed.sql.transactions.experimental.suspendedTransactionAsync
-import org.jetbrains.exposed.sql.update
 import pro.liga.data.rating.RatingModel
 
 object PlayerModel : Table("players") {
@@ -73,6 +70,12 @@ object PlayerModel : Table("players") {
         return suspendedTransactionAsync {
             select { PlayerModel.id eq id }.count() != 0L
         }.await()
+    }
+
+    suspend fun hasPlayerV2(): Deferred<exists> {
+        return suspendedTransactionAsync {
+            exists(PlayerModel.id eq 5)
+        }
     }
 
     suspend fun getListIds(): List<Int> {

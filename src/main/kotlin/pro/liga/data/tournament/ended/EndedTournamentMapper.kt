@@ -1,26 +1,28 @@
 package pro.liga.data.tournament.ended
 
-import com.example.URL_LIGA_PRO
-import com.example.data.game.Game
-import com.example.data.game.GameDTO
 import com.example.data.game.GameMapper
-import com.example.data.tournament.player.TournamentPlayer
-import com.example.data.tournament.player.TournamentPlayerDTO
-import com.example.data.tournament.player.TournamentPlayerMapper
+import pro.liga.data.tournament.ended.player.EndedTournamentPlayer
+import com.example.data.tournament.player.EndedTournamentPlayerDTO
+import com.example.data.tournament.player.EndedTournamentPlayerMapper
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import org.jsoup.Jsoup
+import pro.liga.data.game.Game
+import pro.liga.data.tournament.DayOfTheWeek
+import pro.liga.data.tournament.League
+import pro.liga.data.tournament.Month
 import pro.liga.data.tournament.TournamentType
 
 class EndedTournamentMapper {
     fun map(endedTournament: EndedTournament): EndedTournamentDTO? {
         val type = TournamentType.getType(endedTournament.type)
+        val league = League.getLeague(type = endedTournament.title) ?: return null
         val dateTime = getDateTime(date = endedTournament.date, time = endedTournament.time) ?: return null
         val dayOfTheWeek = DayOfTheWeek.getDay(endedTournament.dayOfTheWeek)
         val players = endedTournament.players.mapIndexed { index, player ->
-            getTournamentsPlayerDTO(player = player, index = index, tournamentId = endedTournament.id)
+            getEndedTournamentPlayerDTO(player = player, index = index, tournamentId = endedTournament.id)
         }
         val games = endedTournament.games.map {
             getGameDTO(link = it.first, time = it.second, tournamentId = endedTournament.id, dateTime = dateTime)
@@ -29,15 +31,15 @@ class EndedTournamentMapper {
         return EndedTournamentDTO(
             id = endedTournament.id,
             type = type,
-            title = endedTournament.title,
+            league = league,
             dateTime = dateTime,
             dayOfTheWeek = dayOfTheWeek,
             players = players,
-            games = games
+            //games = games
         )
     }
 
-    private fun getGameDTO(link: String, time: String, tournamentId: Int, dateTime: LocalDateTime): GameDTO {
+    private fun getGameDTO(link: String, time: String, tournamentId: Int, dateTime: LocalDateTime): Unit {
         val document = Jsoup.connect("$URL_LIGA_PRO/$link").get()
         val players = document.select("div.game_info").select("div.player")
             .map { it.selectFirst("a")?.attr("href")?.removePrefix("players/")?.toInt() ?: 0 }
@@ -70,20 +72,21 @@ class EndedTournamentMapper {
         return LocalDateTime.of(localDate, localTime)
     }
 
-    private fun getTournamentsPlayerDTO(player: String, index: Int, tournamentId: Int): TournamentPlayerDTO {
-        val tournamentPlayer = TournamentPlayer(
+    private fun getEndedTournamentPlayerDTO(player: String, index: Int, tournamentId: Int): EndedTournamentPlayerDTO {
+        val endedTournamentPlayer = EndedTournamentPlayer(
             index = index,
             link = player,
             tournamentId = tournamentId
         )
-        return tournamentPlayerMapper.map(tournamentPlayer)
+        return endedTournamentPlayerMapper.map(endedTournamentPlayer)
     }
 
     companion object {
-        private val formatter = DateTimeFormatter.ofPattern("HH:mm")
 
-        private val tournamentPlayerMapper = TournamentPlayerMapper()
+        private const val URL_LIGA_PRO = "https://tt.sport-liga.pro"
 
+        private val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm")
+        private val endedTournamentPlayerMapper = EndedTournamentPlayerMapper()
         private val gameMapper = GameMapper()
     }
 }
