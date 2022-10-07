@@ -13,6 +13,6 @@ data class EndedTournamentDTO(
     val type: TournamentType,
     val dateTime: LocalDateTime,
     val dayOfTheWeek: DayOfTheWeek,
-    val players: List<EndedTournamentPlayerDTO>,
+    //val players: List<EndedTournamentPlayerDTO>,
     //val games: List<GameDTO>
 )

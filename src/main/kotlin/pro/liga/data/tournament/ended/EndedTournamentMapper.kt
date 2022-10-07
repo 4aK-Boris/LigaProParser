@@ -34,7 +34,7 @@ class EndedTournamentMapper {
             league = league,
             dateTime = dateTime,
             dayOfTheWeek = dayOfTheWeek,
-            players = players,
+            //players = players,
             //games = games
         )
     }

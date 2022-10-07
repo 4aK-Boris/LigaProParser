@@ -8,7 +8,7 @@ import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 import org.jetbrains.exposed.sql.update
-import pro.liga.data.player.PlayerModel
+import pro.liga.database.player.PlayerModel
 
 object GamePlayerModel : Table("game_players") {
     private val id = integer("id").autoIncrement()

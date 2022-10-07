@@ -1,7 +1,7 @@
 package pro.liga.data.tournament
 
-enum class League(private val leftBorder: Int, private val rightBorder: Int) {
-    LEAGUE_250_300(leftBorder = 250, rightBorder = 300),
+enum class League(val leftBorder: Int, val rightBorder: Int) {
+    LEAGUE_250_300(leftBorder = 250, rightBorder = 300) ,
     LEAGUE_300_350(leftBorder = 300, rightBorder = 350),
     LEAGUE_350_400(leftBorder = 350, rightBorder = 400),
     LEAGUE_400_450(leftBorder = 400, rightBorder = 450),
@@ -12,6 +12,9 @@ enum class League(private val leftBorder: Int, private val rightBorder: Int) {
     LEAGUE_700_800(leftBorder = 700, rightBorder = 800),
     LEAGUE_800_900(leftBorder = 800, rightBorder = 900),
     LEAGUE_900_1000(leftBorder = 900, rightBorder = 1000);
+
+    val leagueName: String
+        get() = "Лига $leftBorder-$rightBorder"
 
     companion object {
 

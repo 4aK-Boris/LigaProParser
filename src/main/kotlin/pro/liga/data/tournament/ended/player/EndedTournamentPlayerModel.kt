@@ -1,26 +1,19 @@
-package com.example.data.tournament.player
+package pro.liga.data.tournament.ended.player
 
+import com.example.data.tournament.player.EndedTournamentPlayerDTO
 import kotlinx.coroutines.Dispatchers
-import org.jetbrains.exposed.sql.Table
-import org.jetbrains.exposed.sql.insert
+import org.jetbrains.exposed.dao.id.LongIdTable
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
-import pro.liga.data.player.PlayerModel
+import pro.liga.database.player.PlayerModel
 
-object EndedTournamentPlayerModel: Table("tournament_players") {
-    private val id = long("id").autoIncrement()
+object EndedTournamentPlayerModel: LongIdTable("tournament_players") {
     private val place = integer("place")
     private val playerId = integer("player_id") references PlayerModel.id
     private val tournamentId = integer("tournament_id") //references TournamentModel.id
 
-    override val primaryKey = PrimaryKey(id, name = "pk_tournament_player")
 
     suspend fun insert(endedTournamentPlayerDTO: EndedTournamentPlayerDTO) {
         newSuspendedTransaction(Dispatchers.IO) {
-            insert {
-                it[place] = endedTournamentPlayerDTO.place
-                it[playerId] = endedTournamentPlayerDTO.playerId
-                it[tournamentId] = endedTournamentPlayerDTO.tournamentId
-            }
         }
     }
 }

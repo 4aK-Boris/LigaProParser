@@ -8,7 +8,7 @@ import io.ktor.server.routing.put
 import io.ktor.server.routing.routing
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import pro.liga.data.player.PlayerModel
+import pro.liga.database.player.PlayerModel
 import pro.liga.settings.Settings
 
 fun Application.updateInfoOfPlayers(backgroundWork: BackgroundWork) {

@@ -14,7 +14,7 @@ import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import pro.liga.data.player.Player
 import pro.liga.data.player.PlayerMapper
-import pro.liga.data.player.PlayerModel
+import pro.liga.database.player.PlayerModel
 import pro.liga.data.rating.Rating
 import pro.liga.data.rating.RatingMapper
 import pro.liga.data.rating.RatingModel
