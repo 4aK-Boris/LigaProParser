@@ -23,8 +23,7 @@ object EndedTournamentTransaction {
                 dateTime = endedTournamentDTO.dateTime
                 dayOfTheWeek = endedTournamentDTO.dayOfTheWeek
             }
-            val players = insertPlayers(players = )
-            tournament.players = SizedCollection(players)
+
         }
     }
 

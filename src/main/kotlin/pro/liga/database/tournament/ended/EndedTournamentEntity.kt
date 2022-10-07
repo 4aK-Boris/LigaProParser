@@ -9,6 +9,7 @@ import pro.liga.data.tournament.TournamentType
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import pro.liga.database.player.PlayerEntity
+import pro.liga.database.player.tournament.ended.EndedTournamentPlayerEntity.Companion.referrersOn
 import pro.liga.database.player.tournament.ended.EndedTournamentPlayerModel
 
 class EndedTournamentEntity(id: EntityID<Int>) : IntEntity(id) {
@@ -18,7 +19,7 @@ class EndedTournamentEntity(id: EntityID<Int>) : IntEntity(id) {
     var dateTime: LocalDateTime by EndedTournamentModel.dateTime
     var dayOfTheWeek: DayOfTheWeek by EndedTournamentModel.dayOfTheWeek
 
-    var players by PlayerEntity via EndedTournamentPlayerModel
+    val players by EndedTournamentEntity referrersOn EndedTournamentPlayerModel.tournamentId
 
     override fun toString(): String {
         return "id = ${id.value}, " +

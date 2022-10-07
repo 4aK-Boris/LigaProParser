@@ -1,32 +1,16 @@
 package pro.liga
 
 import java.time.LocalDate
-import java.time.LocalDateTime
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.launch
 import org.jetbrains.exposed.sql.transactions.transaction
-import org.jetbrains.exposed.sql.transactions.transactionManager
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
-import org.jsoup.nodes.Element
 import org.jsoup.select.Elements
 import org.junit.Test
-import pro.liga.data.rating.RatingDTO
-import pro.liga.data.rating.RatingEntity
-import pro.liga.data.rating.RatingModel
-import pro.liga.data.tournament.DayOfTheWeek.FRIDAY
-import pro.liga.data.tournament.League.LEAGUE_300_350
 import pro.liga.data.tournament.League.LEAGUE_800_900
-import pro.liga.data.tournament.TournamentType
-import pro.liga.data.tournament.TournamentType.A4
-import pro.liga.data.tournament.TournamentType.A6
-import pro.liga.data.tournament.ended.EndedTournamentDTO
 import pro.liga.database.DataSource
+import pro.liga.database.player.rating.RatingEntity
 import pro.liga.database.tournament.ended.EndedTournamentEntity
 import pro.liga.database.tournament.ended.EndedTournamentModel
-import pro.liga.database.tournament.ended.EndedTournamentTransaction
 
 class ApplicationTest {
 
@@ -72,14 +56,14 @@ class ApplicationTest {
 //        while (job.isActive) {
 //            val k = 0
 //        }
-        transaction {
-            val k = RatingEntity.new(id = 5L) {
-                playerId = 3
-                date = LocalDate.now()
-                rating = 500
-            }
-            println(k)
-        }
+//        transaction {
+//            val k = RatingEntity.new(id = 5L) {
+//                player = 3
+//                date = LocalDate.now()
+//                rating = 500
+//            }
+//            println(k)
+//        }
     }
 
     @Test

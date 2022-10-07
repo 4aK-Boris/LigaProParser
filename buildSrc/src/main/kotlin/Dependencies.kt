@@ -70,6 +70,14 @@ object Dependencies {
         private const val version = "1.15.3"
 
         const val jsoup = "org.jsoup:jsoup:$version"
+    }
 
+    object Koin {
+
+        private const val version = "3.2.2"
+
+        const val koin = "io.insert-koin:koin-ktor:$version"
+        const val koinLogger = "io.insert-koin:koin-logger-slf4j:$version"
+        const val koinJUnit = "io.insert-koin:koin-test-junit4:$version"
     }
 }

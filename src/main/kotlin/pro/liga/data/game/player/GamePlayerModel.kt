@@ -69,10 +69,10 @@ object GamePlayerModel : Table("game_players") {
     }
 
     suspend fun delete(gameId: Int, playerId: Int) {
-        newSuspendedTransaction {
-            deleteWhere {
-                (GamePlayerModel.gameId eq gameId) and (GamePlayerModel.playerId eq playerId)
-            }
-        }
+//        newSuspendedTransaction {
+//            deleteWhere {
+//                (GamePlayerModel.gameId eq gameId) and (GamePlayerModel.playerId eq playerId)
+//            }
+//        }
     }
 }

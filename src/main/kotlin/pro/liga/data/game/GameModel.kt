@@ -13,10 +13,10 @@ object GameModel: Table("games") {
     private val tournamentId = integer("tournament_id") //references TournamentModel.id
     private val dateTime = datetime("date_time")
     private val type = bool("type")
-    private val firstPlayer = integer("first_player") references PlayerModel.id
-    private val secondPlayer = integer("second_player") references PlayerModel.id
-    private val winnerPlayer = (integer("winner_player") references PlayerModel.id).nullable()
-    private val losingPlayer = (integer("losing_player") references PlayerModel.id).nullable()
+//    private val firstPlayer = integer("first_player").references(PlayerModel.id)
+//    private val secondPlayer = integer("second_player") references PlayerModel.id
+//    private val winnerPlayer = (integer("winner_player") references PlayerModel.id).nullable()
+//    private val losingPlayer = (integer("losing_player") references PlayerModel.id).nullable()
     private val countSets = integer("count_sets").nullable()
     private val countPoints = integer("count_points").nullable()
     private val firstScore = integer("first_score").nullable()

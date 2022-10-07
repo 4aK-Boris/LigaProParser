@@ -9,41 +9,41 @@ import io.ktor.server.routing.routing
 
 fun Application.configureBackgroundJob() {
 
-    val backgroundWork = BackgroundWork(log = log)
-
-    backgroundWork.firstLaunch()
-
-    routing {
-
-        with(backgroundWork) {
-
-            get("checkUpdateRatingPlayersJob") {
-                call.respond(updateRatingPlayersJobIsActive)
-            }
-
-            get("restartUpdateRatingPlayersJob") {
-                if (!updateRatingPlayersJobIsActive) {
-                    startUpdateRatingPlayersJob()
-                }
-                call.respond(updateRatingPlayersJobIsActive)
-            }
-
-            get("checkDeletePlayersJob") {
-                call.respond(deletePlayersJobIsActive)
-            }
-
-            get("restartDeletePlayersJob") {
-                if (!deletePlayersJobIsActive) {
-                    startDeletePlayersJob()
-                }
-                call.respond(deletePlayersJobIsActive)
-            }
-        }
-    }
-
-    addPlayers(backgroundWork = backgroundWork)
-
-    updateInfoOfPlayers(backgroundWork = backgroundWork)
-
-    deletePlayers()
+//    val backgroundWork = BackgroundWork(log = log)
+//
+//    backgroundWork.firstLaunch()
+//
+//    routing {
+//
+//        with(backgroundWork) {
+//
+//            get("checkUpdateRatingPlayersJob") {
+//                call.respond(updateRatingPlayersJobIsActive)
+//            }
+//
+//            get("restartUpdateRatingPlayersJob") {
+//                if (!updateRatingPlayersJobIsActive) {
+//                    startUpdateRatingPlayersJob()
+//                }
+//                call.respond(updateRatingPlayersJobIsActive)
+//            }
+//
+//            get("checkDeletePlayersJob") {
+//                call.respond(deletePlayersJobIsActive)
+//            }
+//
+//            get("restartDeletePlayersJob") {
+//                if (!deletePlayersJobIsActive) {
+//                    startDeletePlayersJob()
+//                }
+//                call.respond(deletePlayersJobIsActive)
+//            }
+//        }
+//    }
+//
+//    addPlayers(backgroundWork = backgroundWork)
+//
+//    updateInfoOfPlayers(backgroundWork = backgroundWork)
+//
+//    deletePlayers()
 }

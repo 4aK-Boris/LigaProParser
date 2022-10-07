@@ -38,6 +38,9 @@ dependencies {
     implementation(Dependencies.Slf4j.api)
     implementation(Dependencies.Slf4j.log4j12)
 
+    implementation(Dependencies.Koin.koin)
+    implementation(Dependencies.Koin.koinLogger)
+
     implementation(Dependencies.Logback.logback)
 
     implementation(Dependencies.Postgresql.postgresql)
@@ -49,4 +52,6 @@ dependencies {
     testImplementation(Dependencies.Ktor.testsJvm)
 
     testImplementation(Dependencies.Kotlin.junit)
+    testImplementation(Dependencies.Koin.koinJUnit)
+    testImplementation("org.mockito.kotlin:mockito-kotlin:4.0.0")
 }
