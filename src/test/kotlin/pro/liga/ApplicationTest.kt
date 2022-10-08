@@ -1,6 +1,5 @@
 package pro.liga
 
-import java.time.LocalDate
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
@@ -8,7 +7,6 @@ import org.jsoup.select.Elements
 import org.junit.Test
 import pro.liga.data.tournament.League.LEAGUE_800_900
 import pro.liga.database.DataSource
-import pro.liga.database.player.rating.RatingEntity
 import pro.liga.database.tournament.ended.EndedTournamentEntity
 import pro.liga.database.tournament.ended.EndedTournamentModel
 

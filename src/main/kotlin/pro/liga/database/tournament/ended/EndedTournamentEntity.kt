@@ -8,9 +8,7 @@ import pro.liga.data.tournament.League
 import pro.liga.data.tournament.TournamentType
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import pro.liga.database.player.PlayerEntity
-import pro.liga.database.player.tournament.ended.EndedTournamentPlayerEntity.Companion.referrersOn
-import pro.liga.database.player.tournament.ended.EndedTournamentPlayerModel
+import pro.liga.database.player.tournament.EndedTournamentPlayerModel
 
 class EndedTournamentEntity(id: EntityID<Int>) : IntEntity(id) {
 

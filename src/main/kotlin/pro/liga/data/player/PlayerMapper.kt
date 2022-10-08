@@ -11,7 +11,7 @@ class PlayerMapper {
         val lastName = listName[0]
         val firstName = listName[1]
         val patronymic: String? = if (listName.size == 2) null else listName[2]
-        val rank = player.rank.toInt()
+        val rank = player.rank.toShort()
         if (player.date.isBlank()) return null
         val date = LocalDate.parse(player.date, formatter)
         if (LocalDate.now().minusYears(1L).isAfter(date)) return null

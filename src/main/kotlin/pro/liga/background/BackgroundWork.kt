@@ -1,26 +1,6 @@
 package pro.liga.background
 
 import io.ktor.util.logging.Logger
-import java.time.DayOfWeek
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.LocalTime
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import org.jsoup.Jsoup
-import org.jsoup.nodes.Document
-import pro.liga.data.player.Player
-import pro.liga.data.player.PlayerMapper
-import pro.liga.database.player.PlayerModel
-import pro.liga.data.rating.Rating
-import pro.liga.data.rating.RatingMapper
-import pro.liga.database.player.rating.RatingModel
-import pro.liga.settings.Settings
-import kotlin.time.Duration.Companion.days
-import kotlin.time.Duration.Companion.nanoseconds
 
 class BackgroundWork(private val log: Logger) {
 

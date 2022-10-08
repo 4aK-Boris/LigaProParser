@@ -7,7 +7,7 @@ data class PlayerDTO(
     val firstName: String,
     val lastName: String,
     val patronymic: String?,
-    val rank: Int,
+    val rank: Short,
     val date: LocalDate,
     val id: Int,
     val ratingDTO: RatingDTO

@@ -1,12 +1,6 @@
 package pro.liga.background
 
-import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.Application
-import io.ktor.server.application.call
-import io.ktor.server.response.respond
-import io.ktor.server.routing.delete
-import io.ktor.server.routing.routing
-import pro.liga.database.player.PlayerModel
 
 fun Application.deletePlayers() {
 //    routing {

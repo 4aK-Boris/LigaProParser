@@ -1,10 +1,8 @@
-package pro.liga.database.player.tournament.ended
+package pro.liga.database.player.tournament
 
 import org.jetbrains.exposed.dao.id.IntIdTable
 import org.jetbrains.exposed.sql.ReferenceOption.CASCADE
 import org.jetbrains.exposed.sql.ReferenceOption.NO_ACTION
-import org.jetbrains.exposed.sql.Table
-import pro.liga.data.tournament.ended.EndedTournament
 import pro.liga.database.player.PlayerModel
 import pro.liga.database.tournament.ended.EndedTournamentModel
 

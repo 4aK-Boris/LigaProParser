@@ -5,8 +5,9 @@ import org.jetbrains.exposed.sql.StdOutSqlLogger
 import org.jetbrains.exposed.sql.addLogger
 import org.jetbrains.exposed.sql.transactions.transaction
 import pro.liga.data.player.PlayerDTO
+import pro.liga.database.player.rating.RatingEntity
 
-object PlayerTransaction {
+class PlayerTransaction {
 
     fun insert(playerDTO: PlayerDTO): PlayerEntity {
         return transaction {
@@ -64,10 +65,20 @@ object PlayerTransaction {
         }
     }
 
-    fun hasPlayerEntity(id: Int): PlayerEntity? {
+    fun getEntity(id: Int): PlayerEntity? {
         return transaction {
             addLogger(StdOutSqlLogger)
             PlayerEntity.findById(id = id)
+        }
+    }
+
+    fun ratings(id: Int): List<RatingEntity>? {
+        return getEntity(id = id)?.let { ratings(playerEntity = it) }
+    }
+
+    fun ratings(playerEntity: PlayerEntity): List<RatingEntity> {
+        return transaction {
+            playerEntity.ratings.toList()
         }
     }
 

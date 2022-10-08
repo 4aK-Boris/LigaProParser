@@ -1,4 +1,4 @@
-package pro.liga.database.player.tournament.ended
+package pro.liga.database.player.tournament
 
 import org.jetbrains.exposed.dao.IntEntity
 import org.jetbrains.exposed.dao.IntEntityClass
@@ -21,5 +21,5 @@ class EndedTournamentPlayerEntity(id: EntityID<Int>) : IntEntity(id) {
                 "tournament = $tournament"
     }
 
-    companion object : IntEntityClass<EndedTournamentEntity>(EndedTournamentModel)
+    companion object : IntEntityClass<EndedTournamentPlayerEntity>(EndedTournamentPlayerModel)
 }

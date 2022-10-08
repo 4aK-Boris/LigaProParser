@@ -5,15 +5,18 @@ import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import pro.liga.data.player.PlayerDTO
 
-private const val ONE = "1"
 private const val TWO = "2"
 private const val THREE = "3"
 
-fun testPlayerModule() = module {
+private const val FIRST = "first"
+private const val SECOND = "second"
+private const val THIRD = "third"
 
-    includes(testRatingModule())
+val testPlayerModule = module {
 
-    single(qualifier = named(ONE)) {
+    includes(testRatingModule)
+
+    single() {
         PlayerDTO(
             id = 1,
             firstName = "Дмитрий",
@@ -21,7 +24,7 @@ fun testPlayerModule() = module {
             patronymic = "Алексеевич",
             rank = 100,
             date = LocalDate.now(),
-            ratingDTO = get(qualifier = named(ONE))
+            ratingDTO = get(qualifier = named(name = FIRST))
         )
     }
 
@@ -33,7 +36,7 @@ fun testPlayerModule() = module {
             patronymic = "Антонович",
             rank = 150,
             date = LocalDate.now(),
-            ratingDTO = get(qualifier = named(TWO))
+            ratingDTO = get(qualifier = named(name = SECOND))
         )
     }
 
@@ -45,7 +48,7 @@ fun testPlayerModule() = module {
             patronymic = "Александрович",
             rank = 200,
             date = LocalDate.now(),
-            ratingDTO = get(qualifier = named(THREE))
+            ratingDTO = get(qualifier = named(name = THIRD))
         )
     }
 }

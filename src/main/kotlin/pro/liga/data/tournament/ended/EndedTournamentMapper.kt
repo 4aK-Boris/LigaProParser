@@ -30,7 +30,7 @@ class EndedTournamentMapper {
 
         return EndedTournamentDTO(
             id = endedTournament.id,
-            type = type,
+            tournamentType = type,
             league = league,
             dateTime = dateTime,
             dayOfTheWeek = dayOfTheWeek,
