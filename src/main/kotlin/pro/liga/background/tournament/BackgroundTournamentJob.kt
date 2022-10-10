@@ -4,7 +4,7 @@ import io.ktor.util.logging.Logger
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.jsoup.select.Elements
-import pro.liga.data.tournament.ended.EndedTournament
+import pro.liga.data.tournament.Tournament
 
 class BackgroundEndedTournamentJob(private val log: Logger) {
 
@@ -19,7 +19,7 @@ class BackgroundEndedTournamentJob(private val log: Logger) {
             if (!isEnded) return false
             val players = playersInfo.players()
             val games = document.games()
-            val tournament = EndedTournament(
+            val tournament = Tournament(
                 id = id,
                 title = title,
                 type = typeString,

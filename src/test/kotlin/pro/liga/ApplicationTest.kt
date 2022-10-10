@@ -5,18 +5,26 @@ import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.jsoup.select.Elements
 import org.junit.Test
-import pro.liga.data.tournament.League.LEAGUE_800_900
+import pro.liga.data.tournament.options.League.LEAGUE_800_900
 import pro.liga.database.DataSource
-import pro.liga.database.tournament.ended.EndedTournamentEntity
-import pro.liga.database.tournament.ended.EndedTournamentModel
+import pro.liga.database.MainEntity
+import pro.liga.database.tournament.TournamentEntity
+import pro.liga.database.tournament.TournamentModel
+
+class TestClass(val k: Int): MainEntity {
+    override fun hashCode(): Int {
+        return k.hashCode()
+    }
+}
 
 class ApplicationTest {
 
     @Test
     fun testInt() {
-        val str = "hhgg"
-        val value = str.toIntOrNull()
-        println(value)
+        val test = TestClass(k = 1)
+        val hashCode = test.getHashCode()
+        println(hashCode)
+        println(test.hashCode())
     }
 
     @Test
@@ -31,7 +39,7 @@ class ApplicationTest {
 //        )
 //        EndedTournamentTransaction.insert(endedTournamentDTO = endedTournamentDTO)
         transaction {
-            val data = EndedTournamentEntity.find { EndedTournamentModel.league eq LEAGUE_800_900 }
+            val data = TournamentEntity.find { TournamentModel.league eq LEAGUE_800_900 }
             data.forEach {
                 println(it)
             }

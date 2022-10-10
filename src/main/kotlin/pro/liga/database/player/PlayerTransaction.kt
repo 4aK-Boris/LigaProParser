@@ -5,9 +5,10 @@ import org.jetbrains.exposed.sql.StdOutSqlLogger
 import org.jetbrains.exposed.sql.addLogger
 import org.jetbrains.exposed.sql.transactions.transaction
 import pro.liga.data.player.PlayerDTO
+import pro.liga.database.Transaction
 import pro.liga.database.player.rating.RatingEntity
 
-class PlayerTransaction {
+class PlayerTransaction: Transaction {
 
     fun insert(playerDTO: PlayerDTO): PlayerEntity {
         return transaction {

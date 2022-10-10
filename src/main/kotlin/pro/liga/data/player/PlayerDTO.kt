@@ -1,7 +1,8 @@
 package pro.liga.data.player
 
 import java.time.LocalDate
-import pro.liga.data.rating.RatingDTO
+import pro.liga.data.DTO
+import pro.liga.data.player.rating.RatingDTO
 
 data class PlayerDTO(
     val firstName: String,
@@ -11,4 +12,4 @@ data class PlayerDTO(
     val date: LocalDate,
     val id: Int,
     val ratingDTO: RatingDTO
-)
+): DTO

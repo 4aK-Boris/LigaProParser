@@ -1,28 +1,38 @@
 package pro.liga.database
 
-import java.time.LocalDate
+import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.koin.core.qualifier.named
 import org.koin.test.KoinTest
 import org.koin.test.KoinTestRule
 import org.koin.test.get
 import pro.liga.data.player.PlayerDTO
 import pro.liga.database.player.PlayerTransaction
+import pro.liga.di.Qualifiers.LIST_PLAYERS_DTO
+import pro.liga.di.Qualifiers.LIST_UPDATE_PLAYERS_DTO
 import pro.liga.di.appModule
 import kotlin.test.assertEquals
-
 
 class TestPlayersTable : KoinTest {
 
     private val playerTransaction by lazy { get<PlayerTransaction>() }
 
+    private val listPlayerDTO by lazy { get<List<PlayerDTO>>(qualifier = LIST_PLAYERS_DTO.qualifier) }
+    private val listUpdatePlayersDTO by lazy {
+        get<List<Pair<PlayerDTO, PlayerDTO>>>(qualifier = LIST_UPDATE_PLAYERS_DTO.qualifier)
+    }
+
     @Before
     fun before() {
         println("Database connect")
         DataSource.testConnectDatabase()
+        playerTransaction.deleteAll()
+    }
 
+    @After
+    fun after() {
+        playerTransaction.deleteAll()
     }
 
     @get:Rule
@@ -32,107 +42,82 @@ class TestPlayersTable : KoinTest {
     }
 
     @Test
-    fun testInsertOne() {
-        val playerDTO = get<PlayerDTO>()
-        val playerEntity = playerTransaction.insert(playerDTO = playerDTO)
-        val selectPlayerEntity = playerTransaction.getEntity(id = playerDTO.id)
+    fun testInsert() {
 
-        assertEquals(expected = playerEntity, actual = selectPlayerEntity)
+        listPlayerDTO.forEach {
 
-        playerTransaction.delete(id = 1)
-    }
+            val playerEntity = playerTransaction.insert(playerDTO = it)
 
-    @Test
-    fun testInsertTwo() {
-        val playerDTO = get<PlayerDTO>(qualifier = named(TWO))
-        val playerEntity = playerTransaction.insert(playerDTO = playerDTO)
-        val selectPlayerEntity = playerTransaction.getEntity(id = playerDTO.id)
+            val selectPlayerEntity = playerTransaction.getEntity(id = it.id)
 
-        assertEquals(expected = playerEntity, actual = selectPlayerEntity)
+            assertEquals(expected = playerEntity, actual = selectPlayerEntity)
+        }
 
-        playerTransaction.delete(id = 2)
-    }
-
-    @Test
-    fun testInsertThree() {
-        val playerDTO = get<PlayerDTO>(qualifier = named(THREE))
-        val playerEntity = playerTransaction.insert(playerDTO = playerDTO)
-        val selectPlayerEntity = playerTransaction.getEntity(id = playerDTO.id)
-
-        assertEquals(expected = playerEntity, actual = selectPlayerEntity)
-
-        playerTransaction.delete(id = 3)
+        playerTransaction.deleteAll()
     }
 
     @Test
     fun testDeleteAll() {
-        val playerOne = get<PlayerDTO>()
-        val playerTwo = get<PlayerDTO>(qualifier = named(TWO))
-        val playerThree = get<PlayerDTO>(qualifier = named(THREE))
 
-        playerTransaction.insert(playerDTO = playerOne)
-        playerTransaction.insert(playerDTO = playerTwo)
-        playerTransaction.insert(playerDTO = playerThree)
+        listPlayerDTO.forEach {
 
-        var hasPlayerOne = playerTransaction.hasPlayer(id = playerOne.id)
-        var hasPlayerTwo = playerTransaction.hasPlayer(id = playerTwo.id)
-        var hasPlayerThree = playerTransaction.hasPlayer(id = playerThree.id)
+            playerTransaction.insert(playerDTO = it)
 
-        assertEquals(expected = hasPlayerOne, actual = true)
-        assertEquals(expected = hasPlayerTwo, actual = true)
-        assertEquals(expected = hasPlayerThree, actual = true)
+            assertEquals(expected = playerTransaction.hasPlayer(id = it.id), actual = true)
+        }
 
         playerTransaction.deleteAll()
 
-        hasPlayerOne = playerTransaction.hasPlayer(id = playerOne.id)
-        hasPlayerTwo = playerTransaction.hasPlayer(id = playerTwo.id)
-        hasPlayerThree = playerTransaction.hasPlayer(id = playerThree.id)
+        listPlayerDTO.forEach {
+            assertEquals(expected = playerTransaction.hasPlayer(id = it.id), actual = false)
 
-        assertEquals(expected = hasPlayerOne, actual = false)
-        assertEquals(expected = hasPlayerTwo, actual = false)
-        assertEquals(expected = hasPlayerThree, actual = false)
+        }
+
     }
 
     @Test
     fun testDeleteById() {
-        val player = get<PlayerDTO>()
-        playerTransaction.insert(playerDTO = player)
-        var hasPlayer = playerTransaction.hasPlayer(id = player.id)
-        assertEquals(expected = hasPlayer, actual = true)
-        playerTransaction.delete(id = player.id)
-        hasPlayer = playerTransaction.hasPlayer(id = player.id)
-        assertEquals(expected = hasPlayer, actual = false)
+
+        listPlayerDTO.forEach {
+
+            playerTransaction.insert(playerDTO = it)
+
+            assertEquals(expected = playerTransaction.hasPlayer(id = it.id), actual = true)
+
+            playerTransaction.delete(id = it.id)
+
+            assertEquals(expected = playerTransaction.hasPlayer(id = it.id), actual = false)
+        }
     }
 
     @Test
     fun testDeleteByDate() {
-        val player = get<PlayerDTO>()
-        playerTransaction.insert(playerDTO = player)
-        var hasPlayer = playerTransaction.hasPlayer(id = player.id)
-        assertEquals(expected = hasPlayer, actual = true)
-        val date = LocalDate.now().plusYears(1L)
-        playerTransaction.delete(date = date)
-        hasPlayer = playerTransaction.hasPlayer(id = player.id)
-        assertEquals(expected = hasPlayer, actual = false)
+
+        listPlayerDTO.forEach {
+            playerTransaction.insert(playerDTO = it)
+
+            assertEquals(expected = playerTransaction.hasPlayer(id = it.id), actual = true)
+
+            playerTransaction.delete(date = it.date.plusMonths(1L))
+
+            assertEquals(expected = playerTransaction.hasPlayer(id = it.id), actual = false)
+        }
+
+        playerTransaction.deleteAll()
     }
 
     @Test
     fun testUpdate() {
-        val oldPlayer = get<PlayerDTO>()
-        val newPlayer = get<PlayerDTO>(qualifier = named(TWO)).copy(id = oldPlayer.id)
+        listUpdatePlayersDTO.forEach { playerDTO ->
 
-        playerTransaction.insert(playerDTO = oldPlayer)
-        playerTransaction.update(playerDTO = newPlayer)
+            playerTransaction.insert(playerDTO = playerDTO.first)
 
-        val playerEntity = playerTransaction.getEntity(id = oldPlayer.id)
+            playerTransaction.update(playerDTO = playerDTO.second)
 
-        assertEquals(expected = playerEntity?.equals(newPlayer), actual = true)
+            val playerEntity = playerTransaction.getEntity(id = playerDTO.first.id)
 
-        playerTransaction.delete(id = oldPlayer.id)
-    }
-
-    companion object {
-        private const val TWO = "2"
-        private const val THREE = "3"
+            assertEquals(expected = playerEntity?.equals(playerDTO.second), actual = true)
+        }
+        playerTransaction.deleteAll()
     }
 }

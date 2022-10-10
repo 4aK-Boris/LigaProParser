@@ -3,8 +3,8 @@ package pro.liga.di
 import org.koin.dsl.module
 import pro.liga.database.player.PlayerTransaction
 import pro.liga.database.player.rating.RatingTransaction
-import pro.liga.database.player.tournament.EndedTournamentPlayerTransaction
-import pro.liga.database.tournament.ended.EndedTournamentTransaction
+import pro.liga.database.player.tournament.TournamentPlayerTransaction
+import pro.liga.database.tournament.TournamentTransaction
 
 val transactionModule = module {
 
@@ -17,10 +17,10 @@ val transactionModule = module {
     }
 
     factory {
-        EndedTournamentTransaction()
+        TournamentTransaction()
     }
 
     factory {
-        EndedTournamentPlayerTransaction()
+        TournamentPlayerTransaction()
     }
 }

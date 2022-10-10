@@ -51,7 +51,8 @@ dependencies {
 
     testImplementation(Dependencies.Ktor.testsJvm)
 
+    implementation("org.jetbrains.kotlin:kotlin-reflect:1.7.20")
+
     testImplementation(Dependencies.Kotlin.junit)
     testImplementation(Dependencies.Koin.koinJUnit)
-    testImplementation("org.mockito.kotlin:mockito-kotlin:4.0.0")
 }

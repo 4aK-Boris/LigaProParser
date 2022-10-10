@@ -1,9 +1,8 @@
 package pro.liga.di
 
 import org.koin.dsl.module
-import pro.liga.di.test.testModule
-import pro.liga.di.test.testPlayerModule
+import pro.liga.di.test.mainTestModule
 
 val appModule = module {
-    includes(testModule, transactionModule)
+    includes(transactionModule, mainTestModule, mapperModule)
 }
