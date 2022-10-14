@@ -2,6 +2,7 @@ package pro.liga.data.tournament
 
 import pro.liga.data.player.tournament.TournamentPlayerDTO
 import java.time.LocalDateTime
+import pro.liga.data.DTO
 import pro.liga.data.tournament.options.DayOfTheWeek
 import pro.liga.data.tournament.options.League
 import pro.liga.data.tournament.options.Room
@@ -16,4 +17,4 @@ data class TournamentDTO(
     val dayOfTheWeek: DayOfTheWeek,
     val players: List<TournamentPlayerDTO>,
     //val games: List<GameDTO>
-)
+): DTO

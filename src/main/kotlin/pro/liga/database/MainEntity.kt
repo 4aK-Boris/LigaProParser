@@ -5,46 +5,88 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import org.jetbrains.exposed.dao.Entity
-import org.koin.ext.getFullName
-import pro.liga.database.player.PlayerEntity
-import pro.liga.database.player.rating.RatingEntity
-import kotlin.reflect.KProperty1
+import pro.liga.data.DTO
+import kotlin.reflect.KClass
 import kotlin.reflect.full.declaredMemberProperties
 import kotlin.reflect.jvm.isAccessible
 
 interface MainEntity {
 
-    fun getHashCode(): Int {
-        return this::class.declaredMemberProperties.fold(initial = 0) { value, property ->
-            println(property::class)
-            if (!property.isConst && !property.instanceOf(Entity::class)) {
-                value hashCode property.getter.call(this).hashCode()
-            } else {
-                value
+    val hashCode: Int
+        get() {
+            return this::class.declaredMemberProperties.fold(initial = 0) { value, property ->
+                if (!property.isConst && !property.instanceOf(Entity::class)) {
+                    value hashCode property.getter.call(this).hashCode()
+                } else {
+                    value
+                }
             }
+        }
+
+    fun <T: DTO> hasEquals(other: Any?, clazz: KClass<T>): Boolean {
+        return when {
+
+            other == null -> false
+
+            other::class == this::class -> {
+                other::class.declaredMemberProperties.zip(this::class.declaredMemberProperties)
+                    .map { (otherP, P) ->
+                        P.isAccessible = true
+                        otherP.isAccessible = true
+                        otherP to P
+                    }
+                    .fold(initial = true) { value, (otherP, P) ->
+                        value && (P.returnType == otherP.returnType && P.getter.call(this) == otherP.getter.call(
+                            other
+                        ))
+                    }
+            }
+
+            other::class == clazz -> {
+                other::class.declaredMemberProperties.filterNot { contains(it.name) }
+                    .fold(initial = true) { value, otherP ->
+                        value && this::class.declaredMemberProperties.firstOrNull {
+                            it.name == otherP.name
+                        }?.let {
+                            (it.returnType == otherP.returnType && it.getter.call(this) == otherP.getter.call(
+                                other
+                            ))
+                        } ?: run {
+                            if (otherP.name == "id") {
+                                ((this as Entity<*>).id.value == otherP.getter.call(other))
+                            } else {
+                                false
+                            }
+                        }
+                    }
+                true
+            }
+
+            else -> false
         }
     }
 
-    fun objectToString(): String {
-        return this::class.declaredMemberProperties.filterNot {
-            it.isAccessible = true
-            containsToString(it.returnType.toString())
-        }.joinToString(", ") {
-            val value = when {
-                it.returnType.toString().contains(other = LocalDate::class.qualifiedName ?: "") ->
-                    (it.getter.call(this) as LocalDate).format(formatterDate)
+    val string: String
+        get() {
+            return this::class.declaredMemberProperties.filterNot {
+                it.isAccessible = true
+                containsToString(it.returnType.toString())
+            }.joinToString(", ") {
+                val value = when {
+                    it.returnType.toString().contains(other = LocalDate::class.qualifiedName ?: "") ->
+                        (it.getter.call(this) as LocalDate).format(formatterDate)
 
-                it.returnType.toString().contains(other = LocalDateTime::class.qualifiedName ?: "")
-                -> (it.getter.call(this) as LocalDate).format(formatterDateTime)
+                    it.returnType.toString().contains(other = LocalDateTime::class.qualifiedName ?: "")
+                    -> (it.getter.call(this) as LocalDate).format(formatterDateTime)
 
-                else -> it.getter.call(this)
+                    else -> it.getter.call(this)
+                }
+                "${it.name} = $value"
             }
-            "${it.name} = $value"
         }
-    }
 
     fun containsToString(name: String) = name.contains(other = Transaction::class.simpleName.orEmpty())
-                || name.contains(other = Entity::class.simpleName.orEmpty())
+            || name.contains(other = Entity::class.simpleName.orEmpty())
 
     fun contains(name: String) = name.contains("DTO") || name.contains("id")
 
@@ -57,41 +99,3 @@ interface MainEntity {
     }
 }
 
-inline fun <reified T> MainEntity.hasEquals(other: Any?): Boolean {
-    return when {
-
-        other == null -> false
-
-        other::class == this::class -> {
-            other::class.declaredMemberProperties.zip(this::class.declaredMemberProperties)
-                .map { (otherP, P) ->
-                    P.isAccessible = true
-                    otherP.isAccessible = true
-                    otherP to P
-                }
-                .fold(initial = true) { value, (otherP, P) ->
-                    value && (P.returnType == otherP.returnType && P.getter.call(this) == otherP.getter.call(other))
-                }
-        }
-
-        other is T -> {
-            other::class.declaredMemberProperties.filterNot { contains(it.name) }
-                .fold(initial = true) { value, otherP ->
-                    value && this::class.declaredMemberProperties.firstOrNull {
-                        it.name == otherP.name
-                    }?.let {
-                        (it.returnType == otherP.returnType && it.getter.call(this) == otherP.getter.call(other))
-                    } ?: run {
-                        if (otherP.name == "id") {
-                            ((this as Entity<*>).id.value == otherP.getter.call(other))
-                        } else {
-                            false
-                        }
-                    }
-                }
-            true
-        }
-
-        else -> false
-    }
-}

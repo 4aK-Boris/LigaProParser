@@ -29,11 +29,10 @@ class TestRatingMapper: KoinTest {
     @Test
     fun testMapper() {
 
-        println(listRatings)
-        println(listRatingsDTO)
-
         listRatings.zip(listRatingsDTO) { rating, ratingDTO ->
+
             val newRatingDTO = ratingMapper.map(rating = rating)
+
             assertEquals(expected = newRatingDTO, actual = ratingDTO.first())
         }
     }

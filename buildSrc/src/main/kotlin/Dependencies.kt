@@ -56,6 +56,7 @@ object Dependencies {
         const val junit = "org.jetbrains.kotlin:kotlin-test-junit:$version"
         const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
         const val serialization = "org.jetbrains.kotlin.plugin.serialization"
+        const val reflect = "org.jetbrains.kotlin:kotlin-reflect:$version"
     }
 
     object Postgresql {
@@ -70,6 +71,13 @@ object Dependencies {
         private const val version = "1.15.3"
 
         const val jsoup = "org.jsoup:jsoup:$version"
+    }
+
+    object KStore {
+
+        private const val version = "0.1"
+
+        const val kStore = "io.github.xxfast:kstore:$version"
     }
 
     object Koin {

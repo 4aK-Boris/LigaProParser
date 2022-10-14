@@ -8,11 +8,10 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
 import pro.liga.data.player.rating.RatingDTO
 import pro.liga.database.MainEntity
-import pro.liga.database.hasEquals
+import pro.liga.database.MyLongEntity
 import pro.liga.database.player.PlayerEntity
-import kotlin.reflect.full.declaredMemberProperties
 
-class RatingEntity(id: EntityID<Long>) : LongEntity(id), KoinComponent, MainEntity {
+class RatingEntity(id: EntityID<Long>) : MyLongEntity<RatingDTO>(id = id, clazz = RatingDTO::class), KoinComponent {
 
     private val ratingTransaction = get<RatingTransaction>()
 
@@ -23,18 +22,6 @@ class RatingEntity(id: EntityID<Long>) : LongEntity(id), KoinComponent, MainEnti
 
     val playerId: Int
         get() = ratingTransaction.getPlayerId(entity = this)
-
-    override fun toString(): String {
-        return objectToString()
-    }
-
-    override fun equals(other: Any?): Boolean {
-        return hasEquals<RatingDTO>(other = other)
-    }
-
-    override fun hashCode(): Int {
-        return getHashCode()
-    }
 
     companion object : LongEntityClass<RatingEntity>(RatingModel)
 }

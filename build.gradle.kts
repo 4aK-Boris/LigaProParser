@@ -46,12 +46,13 @@ dependencies {
     implementation(Dependencies.Postgresql.postgresql)
 
     implementation(Dependencies.Kotlin.coroutines)
+    implementation(Dependencies.Kotlin.reflect)
+
+    implementation(Dependencies.KStore.kStore)
 
     implementation(Dependencies.Jsoup.jsoup)
 
     testImplementation(Dependencies.Ktor.testsJvm)
-
-    implementation("org.jetbrains.kotlin:kotlin-reflect:1.7.20")
 
     testImplementation(Dependencies.Kotlin.junit)
     testImplementation(Dependencies.Koin.koinJUnit)

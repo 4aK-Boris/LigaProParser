@@ -10,11 +10,11 @@ import pro.liga.data.tournament.options.League
 import pro.liga.data.tournament.options.Room
 import pro.liga.data.tournament.options.Type
 import pro.liga.database.MainEntity
-import pro.liga.database.hasEquals
+import pro.liga.database.MyIntEntity
 import pro.liga.database.player.tournament.TournamentPlayerEntity
 import pro.liga.database.player.tournament.TournamentPlayerModel
 
-class TournamentEntity(id: EntityID<Int>) : IntEntity(id), MainEntity {
+class TournamentEntity(id: EntityID<Int>) : MyIntEntity<TournamentDTO>(id = id, clazz = TournamentDTO::class) {
 
     var league: League by TournamentModel.league
     var room: Room by TournamentModel.room
@@ -23,18 +23,6 @@ class TournamentEntity(id: EntityID<Int>) : IntEntity(id), MainEntity {
     var dayOfTheWeek: DayOfTheWeek by TournamentModel.dayOfTheWeek
 
     val players by TournamentPlayerEntity referrersOn TournamentPlayerModel.tournamentId
-
-    override fun toString(): String {
-        return objectToString()
-    }
-
-    override fun equals(other: Any?): Boolean {
-        return hasEquals<TournamentDTO>(other = other)
-    }
-
-    override fun hashCode(): Int {
-        return getHashCode()
-    }
 
     companion object : IntEntityClass<TournamentEntity>(TournamentModel)
 }

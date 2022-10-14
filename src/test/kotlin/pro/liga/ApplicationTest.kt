@@ -21,10 +21,10 @@ class ApplicationTest {
 
     @Test
     fun testInt() {
-        val test = TestClass(k = 1)
-        val hashCode = test.getHashCode()
-        println(hashCode)
-        println(test.hashCode())
+//        val test = TestClass(k = 1)
+//        val hashCode = test.getHashCode()
+//        println(hashCode)
+//        println(test.hashCode())
     }
 
     @Test

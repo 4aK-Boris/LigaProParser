@@ -6,11 +6,11 @@ import org.jetbrains.exposed.dao.IntEntityClass
 import org.jetbrains.exposed.dao.id.EntityID
 import pro.liga.data.player.PlayerDTO
 import pro.liga.database.MainEntity
-import pro.liga.database.hasEquals
+import pro.liga.database.MyIntEntity
 import pro.liga.database.player.rating.RatingEntity
 import pro.liga.database.player.rating.RatingModel
 
-class PlayerEntity(id: EntityID<Int>) : IntEntity(id), MainEntity {
+class PlayerEntity(id: EntityID<Int>) : MyIntEntity<PlayerDTO>(id = id, clazz = PlayerDTO::class) {
 
     var firstName: String by PlayerModel.firstName
     var lastName: String by PlayerModel.lastName
@@ -19,18 +19,6 @@ class PlayerEntity(id: EntityID<Int>) : IntEntity(id), MainEntity {
     var rank: Short by PlayerModel.rank
 
     val ratings by RatingEntity referrersOn RatingModel.player
-
-    override fun toString(): String {
-        return objectToString()
-    }
-
-    override fun equals(other: Any?): Boolean {
-        return hasEquals<PlayerDTO>(other = other)
-    }
-
-    override fun hashCode(): Int {
-        return getHashCode()
-    }
 
     companion object : IntEntityClass<PlayerEntity>(PlayerModel)
 }

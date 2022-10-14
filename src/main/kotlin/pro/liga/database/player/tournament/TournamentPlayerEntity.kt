@@ -1,17 +1,16 @@
 package pro.liga.database.player.tournament
 
-import org.jetbrains.exposed.dao.IntEntity
 import org.jetbrains.exposed.dao.IntEntityClass
 import org.jetbrains.exposed.dao.id.EntityID
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
 import pro.liga.data.player.tournament.TournamentPlayerDTO
-import pro.liga.database.MainEntity
-import pro.liga.database.hasEquals
+import pro.liga.database.MyIntEntity
 import pro.liga.database.player.PlayerEntity
 import pro.liga.database.tournament.TournamentEntity
 
-class TournamentPlayerEntity(id: EntityID<Int>) : IntEntity(id), KoinComponent, MainEntity {
+class TournamentPlayerEntity(id: EntityID<Int>) :
+    MyIntEntity<TournamentPlayerDTO>(id = id, clazz = TournamentPlayerDTO::class), KoinComponent {
 
     private val tournamentPlayerTransaction = get<TournamentPlayerTransaction>()
 
@@ -25,18 +24,6 @@ class TournamentPlayerEntity(id: EntityID<Int>) : IntEntity(id), KoinComponent, 
 
     val tournamentId: Int
         get() = tournamentPlayerTransaction.getTournamentId(entity = this)
-
-    override fun toString(): String {
-        return objectToString()
-    }
-
-    override fun equals(other: Any?): Boolean {
-        return hasEquals<TournamentPlayerDTO>(other = other)
-    }
-
-    override fun hashCode(): Int {
-        return getHashCode()
-    }
 
     companion object : IntEntityClass<TournamentPlayerEntity>(TournamentPlayerModel)
 }
