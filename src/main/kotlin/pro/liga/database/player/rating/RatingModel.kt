@@ -14,6 +14,6 @@ object RatingModel : LongIdTable("rating") {
        onUpdate = ReferenceOption.NO_ACTION,
        fkName = "player"
    )
-   val rating = integer("rating")
+   val rating = short("rating")
    val date = date("date")
 }

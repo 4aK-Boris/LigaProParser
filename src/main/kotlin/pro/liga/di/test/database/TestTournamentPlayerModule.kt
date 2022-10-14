@@ -1,4 +1,4 @@
-package pro.liga.di.test
+package pro.liga.di.test.database
 
 import org.koin.dsl.module
 import pro.liga.data.player.PlayerDTO

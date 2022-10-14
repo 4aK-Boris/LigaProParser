@@ -1,4 +1,4 @@
-package pro.liga.di.test
+package pro.liga.di.test.database
 
 import java.time.LocalDate
 import org.koin.dsl.module
@@ -19,7 +19,7 @@ val testPlayerModule = module {
             patronymic = "Алексеевич",
             rank = 100,
             date = LocalDate.now(),
-            ratingDTO = get(qualifier = FIRST.qualifier)
+            rating = 500
         )
     }
 
@@ -31,7 +31,7 @@ val testPlayerModule = module {
             patronymic = "Антонович",
             rank = 150,
             date = LocalDate.now(),
-            ratingDTO = get(qualifier = SECOND.qualifier)
+            rating = 750
         )
     }
 
@@ -43,7 +43,7 @@ val testPlayerModule = module {
             patronymic = "Александрович",
             rank = 200,
             date = LocalDate.now(),
-            ratingDTO = get(qualifier = THIRD.qualifier)
+            rating = 1000
         )
     }
 

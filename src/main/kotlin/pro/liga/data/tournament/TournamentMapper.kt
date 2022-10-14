@@ -9,14 +9,25 @@ import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import org.jsoup.Jsoup
+import org.koin.core.logger.Logger
 import pro.liga.data.game.Game
 import pro.liga.data.tournament.options.DayOfTheWeek
 import pro.liga.data.tournament.options.League
 import pro.liga.data.tournament.options.Month
 import pro.liga.data.tournament.options.Room
 import pro.liga.data.tournament.options.Type
+import pro.liga.database.tournament.TournamentEntity
 
-class TournamentMapper {
+class TournamentMapper(private val logger: Logger) {
+
+    fun map(id: Int): Tournament? {
+        return null
+    }
+
+    fun mapUpdate(id: Int) {
+
+    }
+
     fun map(tournament: Tournament): TournamentDTO? {
         val type = Room.getType(tournament.type)
         val league = League.getLeague(type = tournament.title) ?: return null

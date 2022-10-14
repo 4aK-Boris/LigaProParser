@@ -15,7 +15,7 @@ class RatingEntity(id: EntityID<Long>) : MyLongEntity<RatingDTO>(id = id, clazz 
 
     private val ratingTransaction = get<RatingTransaction>()
 
-    var rating: Int by RatingModel.rating
+    var rating: Short by RatingModel.rating
     var date: LocalDate by RatingModel.date
 
     var player: PlayerEntity by PlayerEntity referencedOn RatingModel.player

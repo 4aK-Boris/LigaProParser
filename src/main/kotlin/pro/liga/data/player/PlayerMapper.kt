@@ -6,11 +6,9 @@ import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.koin.core.component.KoinComponent
 import org.koin.core.logger.Logger
-import pro.liga.data.player.rating.Rating
-import pro.liga.data.player.rating.RatingMapper
 import pro.liga.settings.Settings
 
-class PlayerMapper(private val ratingMapper: RatingMapper, private val logger: Logger) : KoinComponent {
+class PlayerMapper(private val logger: Logger) : KoinComponent {
 
     fun map(link: String): Player? {
         val id = link.removePrefix(prefix = PREFIX).toInt()
@@ -18,12 +16,11 @@ class PlayerMapper(private val ratingMapper: RatingMapper, private val logger: L
     }
 
     fun map(id: Int, counter: Int = 1): Player? {
-        var player: Player? = null
         try {
             val document = getDocument(id = id)
             document.checkAvailabilityPlayer()?.let { name ->
                 document.info()?.let { info ->
-                    player = Player(
+                    return Player(
                         id = id,
                         name = name,
                         info = info
@@ -36,29 +33,25 @@ class PlayerMapper(private val ratingMapper: RatingMapper, private val logger: L
                 map(id = id, counter = counter + 1)
             }
         }
-        return player
+        return null
     }
 
     fun map(player: Player): PlayerDTO? {
-        var playerDTO: PlayerDTO? = null
         val (firstName, lastName, patronymic) = getName(player.name)
         val rank = player.info[RANK_NUMBER].toShort()
+        val rating = player.info[RATING_NUMBER].toShort()
         getDate(date = player.info[DATE_NUMBER])?.let { date ->
-            val rating = Rating(
-                idPlayer = player.id,
-                rating = player.info[RATING_NUMBER]
-            )
-            playerDTO = PlayerDTO(
+            return PlayerDTO(
                 firstName = firstName,
                 lastName = lastName,
                 patronymic = patronymic,
                 rank = rank,
-                ratingDTO = ratingMapper.map(rating),
+                rating = rating,
                 date = date,
                 id = player.id
             )
         }
-        return playerDTO
+        return null
     }
 
     private fun getName(name: String): Triple<String, String, String?> {
@@ -70,18 +63,15 @@ class PlayerMapper(private val ratingMapper: RatingMapper, private val logger: L
     }
 
     private fun getDate(date: String): LocalDate? {
-        var newDate: LocalDate? = null
         val storageTime = Settings.settings.delaySettings.storageTime.toLong()
         if (date.isNotBlank()) {
             LocalDate.parse(date, formatter).let {
-                newDate = if (LocalDate.now().minusYears(storageTime).isAfter(it)) {
-                    null
-                } else {
-                    it
+                if (!LocalDate.now().minusYears(storageTime).isAfter(it)) {
+                    return it
                 }
             }
         }
-        return newDate
+        return null
     }
 
     private fun Document.checkAvailabilityPlayer(): String? {
@@ -95,8 +85,14 @@ class PlayerMapper(private val ratingMapper: RatingMapper, private val logger: L
     private fun Document.name() = this.select("div.breadcrumbs").select("li.active").text()
 
     private fun Document.info(): List<String>? {
-        val info = this.select("table.user-rating-table").select("td").map { it.text() }
-        return if (incorrectInfo(info = info)) info else null
+        this.select("table.user-rating-table")
+            .select("td")
+            .map { it.text() }
+            .chunked(size = 4)
+            .firstOrNull { it[LIGA_PRO_NUMBER] == LIGA_PRO }?.let {
+                if (incorrectInfo(info = it)) return it
+            }
+        return null
     }
 
     private fun incorrectInfo(info: List<String>) = info.fold(initial = info.isNotEmpty()) { value, item ->
@@ -111,10 +107,12 @@ class PlayerMapper(private val ratingMapper: RatingMapper, private val logger: L
         private const val DATE_NUMBER = 3
         private const val RANK_NUMBER = 0
         private const val RATING_NUMBER = 2
+        private const val LIGA_PRO_NUMBER = 1
         private const val PREFIX = "players/"
         private const val NUMBER_OF_ATTEMPTS = 10
         private const val URL_LIGA_PRO = "https://tt.sport-liga.pro"
         private const val PAGE_NOT_FOUND = "Страница не найдена"
+        private const val LIGA_PRO = "ЛигаПРО"
 
         private val formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")
 

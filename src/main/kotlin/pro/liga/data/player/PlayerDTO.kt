@@ -11,5 +11,13 @@ data class PlayerDTO(
     val rank: Short,
     val date: LocalDate,
     val id: Int,
+    val rating: Short
+): DTO {
+
     val ratingDTO: RatingDTO
-): DTO
+        get() = RatingDTO(
+            playerId = id,
+            date = date,
+            rating = rating
+        )
+}
