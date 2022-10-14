@@ -62,7 +62,7 @@ class TournamentTransaction: KoinComponent, Transaction {
                 date = LocalDate.now(),
                 rank = 23,
                 id = 4,
-                ratingDTO = RatingDTO(playerId = 4, rating = 444, date = LocalDate.now())
+                rating = 444
             ))
         }
     }

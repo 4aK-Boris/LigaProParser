@@ -48,4 +48,4 @@ val testRatingModule = module {
 }
 
 private fun copyRatingDTO(ratingDTO: RatingDTO) =
-    ratingDTO.copy(rating = ratingDTO.rating + 100, date = ratingDTO.date.plusMonths(1L))
+    ratingDTO.copy(rating = (ratingDTO.rating + 100).toShort(), date = ratingDTO.date.plusMonths(1L))

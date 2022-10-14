@@ -1,31 +1,34 @@
 package pro.liga.di.test.mapper
 
+import java.time.LocalDate
 import org.koin.dsl.module
-import pro.liga.data.player.rating.Rating
-import pro.liga.di.Qualifiers.FIRST
-import pro.liga.di.Qualifiers.LIST_RATINGS
-import pro.liga.di.Qualifiers.SECOND
-import pro.liga.di.Qualifiers.THIRD
+import pro.liga.data.player.rating.RatingDTO
+import pro.liga.di.Qualifiers.*
 
 val testRatingMapper = module {
 
-    single(qualifier = FIRST.qualifier) {
-        Rating(idPlayer = 1, rating = "500")
+    single(qualifier = LIST_RATINGS_ID.qualifier) {
+        listOf(357, 6618, 791)
     }
 
-    single(qualifier = SECOND.qualifier) {
-        Rating(idPlayer = 2, rating = "750")
-    }
-
-    single(qualifier = THIRD.qualifier) {
-        Rating(idPlayer = 3, rating = "1000")
-    }
-
-    single(LIST_RATINGS.qualifier) {
-        listOf<Rating>(
-            get(qualifier = FIRST.qualifier),
-            get(qualifier = SECOND.qualifier),
-            get(qualifier = THIRD.qualifier)
+    single(qualifier = LIST_RATINGS_DTO_MAPPER.qualifier) {
+        val date = LocalDate.now()
+        listOf(
+            RatingDTO(
+                playerId = 357,
+                rating = 1265,
+                date = date
+            ),
+            RatingDTO(
+                playerId = 6618,
+                rating = 267,
+                date = date
+            ),
+            RatingDTO(
+                playerId = 791,
+                rating = 753,
+                date = date
+            )
         )
     }
 }
