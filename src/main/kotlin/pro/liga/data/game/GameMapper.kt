@@ -1,8 +1,13 @@
-package com.example.data.game
-import pro.liga.data.game.Game
-import pro.liga.data.game.GameDTO
+package pro.liga.data.game
+
+import org.jsoup.Jsoup
 
 class GameMapper {
+
+    fun map(id: Int) {
+        val document = Jsoup.connect("https://tt.sport-liga.pro/games/203561").cookieStore().cookies
+        println(document)
+    }
     fun map(game: Game): Unit {//GameDTO {
         val id = game.link.removePrefix(PREFIX).toInt()
         val countSets = game.listSets?.size

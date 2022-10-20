@@ -1,6 +1,6 @@
 package pro.liga.data.tournament
 
-import com.example.data.game.GameMapper
+import pro.liga.data.game.GameMapper
 import pro.liga.data.player.tournament.TournamentPlayer
 import pro.liga.data.player.tournament.TournamentPlayerDTO
 import pro.liga.data.player.tournament.TournamentPlayerMapper
@@ -16,7 +16,6 @@ import pro.liga.data.tournament.options.League
 import pro.liga.data.tournament.options.Month
 import pro.liga.data.tournament.options.Room
 import pro.liga.data.tournament.options.Type
-import pro.liga.database.tournament.TournamentEntity
 
 class TournamentMapper(private val logger: Logger) {
 
