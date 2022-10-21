@@ -7,6 +7,7 @@ import org.jetbrains.exposed.sql.and
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 import org.jetbrains.exposed.sql.update
+import pro.liga.data.tournament.game.player.GamePlayerDTO
 import pro.liga.database.player.PlayerModel
 
 object GamePlayerModel : Table("game_players") {

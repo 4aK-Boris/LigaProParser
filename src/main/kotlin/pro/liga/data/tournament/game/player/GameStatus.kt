@@ -1,6 +1,6 @@
-package pro.liga.data.game.player
+package pro.liga.data.tournament.game.player
 
-import pro.liga.data.game.GameDTO
+import pro.liga.data.tournament.game.GameDTO
 import pro.liga.database.tournament.game.GameEntity
 
 class GameStatus {

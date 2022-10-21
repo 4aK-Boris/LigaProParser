@@ -32,8 +32,8 @@ class TestGameMapper {
     }
 
     private fun List<Int>.countPoints(players: Pair<Int, Int>): Pair<Int, Int> {
-        this.forEach {
-
+        val k = this.mapIndexed { index, set ->
+            s
         }
     }
 

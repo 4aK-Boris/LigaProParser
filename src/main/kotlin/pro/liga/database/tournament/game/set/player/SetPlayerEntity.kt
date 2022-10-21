@@ -1,13 +1,13 @@
-package pro.liga.database.tournament.set.player
+package pro.liga.database.tournament.game.set.player
 
 import org.jetbrains.exposed.dao.LongEntityClass
 import org.jetbrains.exposed.dao.id.EntityID
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
-import pro.liga.data.tournament.set.SetPlayerDTO
+import pro.liga.data.tournament.game.set.player.SetPlayerDTO
 import pro.liga.database.MyLongEntity
 import pro.liga.database.player.PlayerEntity
-import pro.liga.database.tournament.set.SetEntity
+import pro.liga.database.tournament.game.set.SetEntity
 
 class SetPlayerEntity(id: EntityID<Long>) : MyLongEntity<SetPlayerDTO>(id = id, clazz = SetPlayerDTO::class),
     KoinComponent {

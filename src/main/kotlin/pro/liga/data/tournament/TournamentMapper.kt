@@ -1,6 +1,6 @@
 package pro.liga.data.tournament
 
-import pro.liga.data.game.GameMapper
+import pro.liga.data.tournament.game.GameMapper
 import pro.liga.data.player.tournament.TournamentPlayer
 import pro.liga.data.player.tournament.TournamentPlayerDTO
 import pro.liga.data.player.tournament.TournamentPlayerMapper
@@ -10,7 +10,7 @@ import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import org.jsoup.Jsoup
 import org.koin.core.logger.Logger
-import pro.liga.data.game.Game
+import pro.liga.data.tournament.game.Game
 import pro.liga.data.tournament.options.DayOfTheWeek
 import pro.liga.data.tournament.options.League
 import pro.liga.data.tournament.options.Month

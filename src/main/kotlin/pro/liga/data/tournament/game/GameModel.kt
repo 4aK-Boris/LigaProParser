@@ -5,7 +5,7 @@ import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.javatime.datetime
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
-import pro.liga.data.game.GameDTO
+import pro.liga.data.tournament.game.GameDTO
 
 object GameModel: Table("games") {
     val id = integer("id")

@@ -1,4 +1,4 @@
-package pro.liga.data.game
+package pro.liga.data.tournament.game
 
 import java.time.LocalDateTime
 

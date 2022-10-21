@@ -1,17 +1,19 @@
-package pro.liga.database.tournament.set.player
+package pro.liga.database.tournament.game.set.player
 
+import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.LongIdTable
+import org.jetbrains.exposed.sql.Column
 import org.jetbrains.exposed.sql.ReferenceOption
 import pro.liga.database.player.PlayerModel
-import pro.liga.database.tournament.set.SetModel
+import pro.liga.database.tournament.game.set.SetModel
 
 object SetPlayerModel: LongIdTable(name = "sets_players") {
 
-    val win = bool("win")
-    val pointsCount = short("points_count")
-    val winSets = short("win_sets")
+    val win: Column<Boolean> = bool("win")
+    val pointsCount: Column<Short> = short("points_count")
+    val winSets: Column<Short> = short("win_sets")
 
-    val player = reference(
+    val player: Column<EntityID<Int>> = reference(
         name = "player_id",
         foreign = PlayerModel,
         onDelete = ReferenceOption.CASCADE,
@@ -19,7 +21,7 @@ object SetPlayerModel: LongIdTable(name = "sets_players") {
         fkName = "player"
     )
 
-    val set = reference(
+    val set: Column<EntityID<Long>> = reference(
         name = "set_id",
         foreign = SetModel,
         onDelete = ReferenceOption.CASCADE,

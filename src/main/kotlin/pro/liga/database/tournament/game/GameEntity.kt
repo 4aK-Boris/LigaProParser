@@ -5,7 +5,7 @@ import org.jetbrains.exposed.dao.IntEntityClass
 import org.jetbrains.exposed.dao.id.EntityID
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
-import pro.liga.data.game.GameDTO
+import pro.liga.data.tournament.game.GameDTO
 import pro.liga.database.MyIntEntity
 import pro.liga.database.tournament.TournamentEntity
 import pro.liga.database.tournament.game.type.FinalStateType
@@ -18,9 +18,7 @@ class GameEntity(id: EntityID<Int>) : MyIntEntity<GameDTO>(id = id, clazz = Game
 
     var dateTime: LocalDateTime by GameModel.dateTime
     var ended: Boolean by GameModel.ended
-    val matchType: MatchType by GameModel.matchType
-    val finalStateType: FinalStateType by GameModel.finalStateType
-    val semiFinalStateType: SemiFinalStateType by GameModel.semiFinalStateType
+    var matchType: MatchType by GameModel.matchType
 
     var tournament: TournamentEntity by TournamentEntity referencedOn GameModel.tournament
 

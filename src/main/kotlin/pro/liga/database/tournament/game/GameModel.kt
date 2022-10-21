@@ -13,8 +13,6 @@ object GameModel: IntIdTable(name = "games") {
     val dateTime = datetime(name = "date_time")
     val ended = bool(name = "ended")
     val matchType = enumeration<MatchType>(name = "match_type")
-    val finalStateType = enumeration<FinalStateType>(name = "final_state_type")
-    val semiFinalStateType = enumeration<SemiFinalStateType>("semi_final_state_type")
 
     val tournament = reference(
         name = "tournament_id",
