@@ -25,7 +25,7 @@ class GamePlayerEntity(id: EntityID<Int>) : MyIntEntity<GamePlayerDTO>(id = id, 
     val semiFinalStateType: SemiFinalStateType? by GamePlayerModel.semiFinalStateType
 
     var game: GameEntity by GameEntity referencedOn GamePlayerModel.game
-    var player by PlayerEntity referencedOn GamePlayerModel.player
+    var player: PlayerEntity? by PlayerEntity optionalReferencedOn GamePlayerModel.player
 
     val gameEntity: GameEntity
         get() = gamePlayerTransaction.getGameEntity(entity = this)
