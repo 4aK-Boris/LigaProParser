@@ -1,6 +1,7 @@
 package pro.liga.data.game
 
 import java.time.LocalDateTime
+import pro.liga.data.DTO
 
 data class GameDTO(
     val id: Int,
@@ -11,4 +12,4 @@ data class GameDTO(
     val countSets: Int? = null,
     val countPoints: Int? = null,
     //val sets: List<SetDTO>? = null
-)
+): DTO
